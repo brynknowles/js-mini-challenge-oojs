@@ -40,40 +40,42 @@ const handleNewPlayerSubmit = event => {
 newPlayerForm.addEventListener("submit", handleNewPlayerSubmit)
 
 /***** Render Helpers *****/
-const renderPlayer = playerObj => {
-  const playerDiv = document.createElement("div")
 
-  playerDiv.className = "player"
-  playerDiv.dataset.number = playerObj.number
+    // this code is replaced with the PlayerContainer render code
+// const renderPlayer = playerObj => {
+//   const playerDiv = document.createElement("div")
 
-  playerDiv.innerHTML = `
-    <h3>${playerObj.name} (<em>${playerObj.nickname}</em>)</h3>
-    <img src="${playerObj.photo}" alt="${playerObj.name}">
-    <p class="likes">${playerObj.likes} likes</p>
-    <button class="like-button">❤️</button>
-  `
+//   playerDiv.className = "player"
+//   playerDiv.dataset.number = playerObj.number
 
-  const likeButton = playerDiv.querySelector(".like-button")
-  likeButton.addEventListener("click", () => {
-    playerObj.likes++
-    const likesPTag = playerDiv.querySelector(".likes")
-    likesPTag.textContent = `${playerObj.likes} likes`
+//   playerDiv.innerHTML = `
+//     <h3>${playerObj.name} (<em>${playerObj.nickname}</em>)</h3>
+//     <img src="${playerObj.photo}" alt="${playerObj.name}">
+//     <p class="likes">${playerObj.likes} likes</p>
+//     <button class="like-button">❤️</button>
+//   `
 
-    // fetch
-    const url = `${BASE_URL}/players/${playerObj.id}`
-    const config = {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ likes: playerObj.likes })
-    }
+//   const likeButton = playerDiv.querySelector(".like-button")
+//   likeButton.addEventListener("click", () => {
+//     playerObj.likes++
+//     const likesPTag = playerDiv.querySelector(".likes")
+//     likesPTag.textContent = `${playerObj.likes} likes`
 
-    fetch(url, config)
-  })
+//     // fetch
+//     const url = `${BASE_URL}/players/${playerObj.id}`
+//     const config = {
+//       method: "PATCH",
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       body: JSON.stringify({ likes: playerObj.likes })
+//     }
 
-  playerContainer.append(playerDiv)
-}
+//     fetch(url, config)
+//   })
+
+//   playerContainer.append(playerDiv)
+// }
 
 /***** Initialize *****/
 const initialize = () => {
@@ -83,11 +85,13 @@ const initialize = () => {
   fetch(url)
     .then(r => r.json())
     .then(players => {
+
       players.forEach(playerObj => {
-        // const playerComponent = new PlayerComponent(playerObj)
-        // console.log(playerComponent)
-        // playerComponent.render(playerContainer)
-        renderPlayer(playerObj)
+        const pContainer = new PlayerContainer(playerObj)
+        console.log(pContainer)
+        pContainer.render(playerContainer)
+        // playerContainer.render(playerContainer)
+        // renderPlayer(playerObj)
       })
     })
 }
